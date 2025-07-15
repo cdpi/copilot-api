@@ -1,8 +1,15 @@
 package io.github.cdpi.copilot.api;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.time.OffsetDateTime;
 import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 /**
  * <h1>Copilot</h1>
@@ -17,7 +24,26 @@ public class Copilot
 	protected static final String CONVERSATIONS_SHARES = CONVERSATIONS + "shares/";
 	protected static final String CONVERSATIONS_SHARES_ID = CONVERSATIONS_SHARES + "%s";
 
-	protected static final Gson GSON = new Gson();
+	protected final Gson gson;
+
+	/**
+	 * @since 0.1.0
+	 */
+	public Copilot()
+		{
+		super();
+
+		final var offsetDateTimeDeserializer = new JsonDeserializer<OffsetDateTime>()
+			{
+			@Override
+			public OffsetDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
+				{
+				return OffsetDateTime.parse(json.getAsString());
+				}
+			};
+
+		gson = new GsonBuilder().registerTypeAdapter(OffsetDateTime.class, offsetDateTimeDeserializer).create();
+		}
 
 	/**
 	 * @throws IOException
@@ -36,7 +62,7 @@ public class Copilot
 	 */
 	protected final <T> T get(final String url, final Class<T> classOfT) throws IOException
 		{
-		return GSON.fromJson(get(url), classOfT);
+		return gson.fromJson(get(url), classOfT);
 		}
 
 	/**

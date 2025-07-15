@@ -1,7 +1,6 @@
 package io.github.cdpi.copilot.api;
 
 import java.time.OffsetDateTime;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public final class Message
 	private String id;
 	private String author;
 	private String channel;
-	private String createdAt;
+	private OffsetDateTime createdAt;
 	private String reaction;
 	private List<Content> content;
 
@@ -49,19 +48,8 @@ public final class Message
 	 */
 	public OffsetDateTime getCreatedAt()
 		{
-		return OffsetDateTime.parse(createdAt);
+		return createdAt;
 		}
-
-	/*
-	public LocalDateTime getCreatedAt2()
-		{
-		final var offsetDateTime = OffsetDateTime.parse(createdAt);
-
-		final var swissDateTime = offsetDateTime.atZoneSameInstant(ZoneId.of("Europe/Zurich"));
-
-		return swissDateTime.toLocalDateTime();
-		}
-	*/
 
 	/**
 	 * @since 0.1.0
@@ -74,7 +62,7 @@ public final class Message
 	/**
 	 * @since 0.1.0
 	 */
-	public Collection<Content> getContent()
+	public List<Content> getContent()
 		{
 		return Collections.unmodifiableList(content);
 		}

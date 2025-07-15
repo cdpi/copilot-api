@@ -1,10 +1,10 @@
 package io.github.cdpi.copilot.api;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -30,7 +30,7 @@ public final class Conversation
 	/**
 	 * @since 0.1.0
 	 */
-	public Collection<Message> getMessages()
+	public List<Message> getMessages()
 		{
 		return Collections.unmodifiableList(messages);
 		}
@@ -38,12 +38,20 @@ public final class Conversation
 	/**
 	 * @since 0.1.0
 	 */
-	public Collection<Message> getMessagesSortedByCreatedAt()
+	public <U extends Comparable<? super U>> List<Message> getMessages(final Function<Message, U> comparator)
 		{
 		final var sorted = new ArrayList<>(messages);
 
-		sorted.sort(Comparator.comparing(Message::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())));
+		sorted.sort(Comparator.comparing(comparator, Comparator.nullsLast(Comparator.naturalOrder())));
 
 		return Collections.unmodifiableList(sorted);
+		}
+
+	/**
+	 * @since 0.1.0
+	 */
+	public List<Message> getMessagesSortedByCreatedAt()
+		{
+		return getMessages(Message::getCreatedAt);
 		}
 	}

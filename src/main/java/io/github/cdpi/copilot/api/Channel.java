@@ -1,19 +1,19 @@
 package io.github.cdpi.copilot.api;
 
 /**
- * <h1>Reaction</h1>
+ * <h1>Channel</h1>
  * 
  * @version 0.1.0
  * @since 0.1.0
  */
-public final class Reaction
+public final class Channel
 	{
-	public static final String UP = "thumbs-up";
+	public static final String WEB = "web";
 
 	/**
 	 * @since 0.1.0
 	 */
-	private Reaction()
+	private Channel()
 		{
 		throw new UnsupportedOperationException();
 		}

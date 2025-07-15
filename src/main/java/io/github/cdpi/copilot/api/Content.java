@@ -32,6 +32,14 @@ public final class Content
 	/**
 	 * @since 0.1.0
 	 */
+	public boolean isText()
+		{
+		return Type.TEXT.equals(type);
+		}
+
+	/**
+	 * @since 0.1.0
+	 */
 	public String getPartId()
 		{
 		return partId;
