@@ -38,7 +38,7 @@ public final class Conversation
 	/**
 	 * @since 0.1.0
 	 */
-	public <U extends Comparable<? super U>> List<Message> getMessages(final Function<Message, U> comparator)
+	public <T extends Comparable<? super T>> List<Message> getMessages(final Function<Message, T> comparator)
 		{
 		final var sorted = new ArrayList<>(messages);
 
@@ -50,8 +50,8 @@ public final class Conversation
 	/**
 	 * @since 0.1.0
 	 */
-	public List<Message> getMessagesSortedByCreatedAt()
+	public List<Message> getMessages(final boolean sortedByCreatedAt)
 		{
-		return getMessages(Message::getCreatedAt);
+		return sortedByCreatedAt ? getMessages(Message::getCreatedAt) : getMessages();
 		}
 	}

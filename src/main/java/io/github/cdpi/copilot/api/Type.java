@@ -9,6 +9,8 @@ package io.github.cdpi.copilot.api;
 public final class Type
 	{
 	public static final String TEXT = "text";
+	public static final String IMAGE = "image";
+
 	/*
 	Propositions Copilot dans VS Code :
 	public static final String IMAGE = "image";

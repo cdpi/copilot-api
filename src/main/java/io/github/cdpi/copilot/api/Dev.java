@@ -1,20 +1,19 @@
 package io.github.cdpi.copilot.api;
 
-public class Dev extends Copilot
+public class Dev
 	{
 	public static void main(String[] args) throws Throwable
 		{
-		final var dev = new Dev();
+		final var copilot = new Copilot();
 
-		//System.out.println(dev.get(CONVERSATIONS_SHARES_ID.formatted("ux3WzaSttRTCMPYU5FnDv")));
-
-		dev.conversation("ux3WzaSttRTCMPYU5FnDv").getMessagesSortedByCreatedAt().forEach(message ->
+		copilot.getConversation("ux3WzaSttRTCMPYU5FnDv").getMessages(true).forEach(message ->
 			{
 			System.out.println("Message ID: " + message.getID());
 			System.out.println("Created At: " + message.getCreatedAt());
 			System.out.println("Channel: " + message.getChannel());
+			System.out.println("Author: " + message.getAuthor());
 			System.out.println("Content: ");
-			message.getContent().forEach(content ->
+			message.getContent(true).forEach(content ->
 				{
 				if (content.isText())
 					{

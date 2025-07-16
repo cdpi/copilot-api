@@ -1,8 +1,11 @@
 package io.github.cdpi.copilot.api;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * <h1>Message</h1>
@@ -13,8 +16,8 @@ import java.util.List;
 public final class Message
 	{
 	private String id;
-	private String author;
-	private String channel;
+	private Author author;
+	private Channel channel;
 	private OffsetDateTime createdAt;
 	private String reaction;
 	private List<Content> content;
@@ -30,7 +33,7 @@ public final class Message
 	/**
 	 * @since 0.1.0
 	 */
-	public String getAuthor()
+	public Author getAuthor()
 		{
 		return author;
 		}
@@ -38,7 +41,7 @@ public final class Message
 	/**
 	 * @since 0.1.0
 	 */
-	public String getChannel()
+	public Channel getChannel()
 		{
 		return channel;
 		}
@@ -65,5 +68,25 @@ public final class Message
 	public List<Content> getContent()
 		{
 		return Collections.unmodifiableList(content);
+		}
+
+	/**
+	 * @since 0.1.0
+	 */
+	public <T extends Comparable<? super T>> List<Content> getContent(final Function<Content, T> comparator)
+		{
+		final var sorted = new ArrayList<>(content);
+
+		sorted.sort(Comparator.comparing(comparator, Comparator.nullsLast(Comparator.naturalOrder())));
+
+		return Collections.unmodifiableList(sorted);
+		}
+
+	/**
+	 * @since 0.1.0
+	 */
+	public List<Content> getContent(final boolean sortedByPartID)
+		{
+		return sortedByPartID ? getContent(Content::getPartID) : getContent();
 		}
 	}

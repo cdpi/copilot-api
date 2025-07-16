@@ -1,15 +1,11 @@
 package io.github.cdpi.copilot.api;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
-import org.apache.http.client.fluent.Request;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import io.github.cdpi.api.API;
+import io.github.cdpi.json.JSON;
 
 /**
  * <h1>Copilot</h1>
@@ -17,14 +13,21 @@ import com.google.gson.JsonParseException;
  * @version 0.1.0
  * @since 0.1.0
  */
-public class Copilot
+public class Copilot extends API
 	{
-	protected static final String URL = "https://copilot.microsoft.com/c/api/";
-	protected static final String CONVERSATIONS = URL + "conversations/";
-	protected static final String CONVERSATIONS_SHARES = CONVERSATIONS + "shares/";
-	protected static final String CONVERSATIONS_SHARES_ID = CONVERSATIONS_SHARES + "%s";
+	protected static final String ROOT = "https://copilot.microsoft.com/c/api/";
 
-	protected final Gson gson;
+	protected static final String CONVERSATIONS = ROOT + "conversations/";
+
+	protected static final String GET_CONVERSATION_TEMPLATE = CONVERSATIONS + "shares/%s";
+
+	protected static final String GET_CONVERSATION_PREVIEW_TEMPLATE = CONVERSATIONS + "shares/%s/preview";
+
+	protected static final Gson GSON = new GsonBuilder()
+		.registerTypeAdapter(OffsetDateTime.class, JSON.getOffsetDateTimeDeserializer())
+		.registerTypeAdapter(Author.class, JSON.getEnumDeserializer(Author.class))
+		.registerTypeAdapter(Channel.class, JSON.getEnumDeserializer(Channel.class))
+		.create();
 
 	/**
 	 * @since 0.1.0
@@ -32,17 +35,6 @@ public class Copilot
 	public Copilot()
 		{
 		super();
-
-		final var offsetDateTimeDeserializer = new JsonDeserializer<OffsetDateTime>()
-			{
-			@Override
-			public OffsetDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
-				{
-				return OffsetDateTime.parse(json.getAsString());
-				}
-			};
-
-		gson = new GsonBuilder().registerTypeAdapter(OffsetDateTime.class, offsetDateTimeDeserializer).create();
 		}
 
 	/**
@@ -50,9 +42,9 @@ public class Copilot
 	 * 
 	 * @since 0.1.0
 	 */
-	public final Conversation conversation(final String id) throws IOException
+	public final Conversation getConversation(final String id) throws IOException
 		{
-		return get(CONVERSATIONS_SHARES_ID.formatted(id), Conversation.class);
+		return getAsT(GET_CONVERSATION_TEMPLATE.formatted(id), Conversation.class);
 		}
 
 	/**
@@ -60,9 +52,9 @@ public class Copilot
 	 * 
 	 * @since 0.1.0
 	 */
-	protected final <T> T get(final String url, final Class<T> classOfT) throws IOException
+	public final byte[] getConversationPreview(final String id) throws IOException
 		{
-		return gson.fromJson(get(url), classOfT);
+		return getAsBytes(GET_CONVERSATION_PREVIEW_TEMPLATE.formatted(id));
 		}
 
 	/**
@@ -70,8 +62,8 @@ public class Copilot
 	 * 
 	 * @since 0.1.0
 	 */
-	protected final String get(final String url) throws IOException
+	private final <T> T getAsT(final String url, final Class<T> classOfT) throws IOException
 		{
-		return Request.Get(url).execute().returnContent().asString();
+		return GSON.fromJson(getAsString(url), classOfT);
 		}
 	}

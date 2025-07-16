@@ -9,6 +9,7 @@ package io.github.cdpi.copilot.api;
 public final class Reaction
 	{
 	public static final String UP = "thumbs-up";
+	public static final String DOWN = "thumbs-down";
 
 	/**
 	 * @since 0.1.0
