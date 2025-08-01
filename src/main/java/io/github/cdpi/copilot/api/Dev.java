@@ -8,6 +8,7 @@ public class Dev
 
 		copilot.getConversation("ux3WzaSttRTCMPYU5FnDv").getMessages(true).forEach(message ->
 			{
+			/*
 			System.out.println("Message ID: " + message.getID());
 			System.out.println("Created At: " + message.getCreatedAt());
 			System.out.println("Channel: " + message.getChannel());
@@ -17,12 +18,17 @@ public class Dev
 				{
 				if (content.isText())
 					{
-					System.out.println(content.getText());
+					System.out.println(content.getText().substring(0, 20));
 					}
 				else
 					{
 					System.out.println("Content type: " + content.getType());
 					}
+				});
+			*/
+			message.getContent(true).forEach(content ->
+				{
+				System.out.println("Content type: " + content.getType());
 				});
 			});
 		}

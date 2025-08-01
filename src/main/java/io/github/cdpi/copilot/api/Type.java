@@ -6,6 +6,7 @@ package io.github.cdpi.copilot.api;
  * @version 0.1.0
  * @since 0.1.0
  */
+// Enum et mettre dans Content
 public final class Type
 	{
 	public static final String TEXT = "text";
