@@ -9,13 +9,4 @@ package io.github.cdpi.copilot.api;
 public enum Channel
 	{
 	WEB;
-
-	/*
-	public static final String WEB = "web";
-
-	private Channel()
-		{
-		throw new UnsupportedOperationException();
-		}
-	*/
 	}

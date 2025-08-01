@@ -1,5 +1,6 @@
 package io.github.cdpi.copilot.api;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import com.google.gson.Gson;
@@ -10,7 +11,7 @@ import io.github.cdpi.json.JSON;
 /**
  * <h1>Copilot</h1>
  * 
- * @version 0.1.0
+ * @version 0.4.4
  * @since 0.1.0
  */
 public class Copilot extends API
@@ -50,11 +51,11 @@ public class Copilot extends API
 	/**
 	 * @throws IOException
 	 * 
-	 * @since 0.1.0
+	 * @since 0.4.4
 	 */
-	public final byte[] getConversationPreview(final String id) throws IOException
+	public final BufferedImage getConversationPreview(final String id) throws IOException
 		{
-		return getAsBytes(GET_CONVERSATION_PREVIEW_TEMPLATE.formatted(id));
+		return getAsImage(GET_CONVERSATION_PREVIEW_TEMPLATE.formatted(id));
 		}
 
 	/**

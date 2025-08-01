@@ -10,14 +10,4 @@ public enum Author
 	{
 	AI,
 	HUMAN;
-
-	/*
-	public static final String AI = "ai";
-	public static final String HUMAN = "human";
-
-	private Author()
-		{
-		throw new UnsupportedOperationException();
-		}
-	*/
 	}
