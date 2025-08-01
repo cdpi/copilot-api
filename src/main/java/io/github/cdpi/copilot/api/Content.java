@@ -3,12 +3,36 @@ package io.github.cdpi.copilot.api;
 /**
  * <h1>Content</h1>
  * 
- * @version 0.1.0
+ * @version 0.4.4
  * @since 0.1.0
  */
 public final class Content
 	{
-	private String type;
+	/**
+	 * <h1>Content.Type</h1>
+	 * 
+	 * @version 0.4.4
+	 * @since 0.4.4
+	 */
+	public enum Type
+		{
+		IMAGE,
+		TEXT;
+
+		//public static final String TEXT = "text";
+		//public static final String IMAGE = "image";
+
+		/*
+		Propositions Copilot dans VS Code :
+		public static final String IMAGE = "image";
+		public static final String VIDEO = "video";
+		public static final String AUDIO = "audio";
+		public static final String FILE = "file";
+		public static final String CODE = "code";
+		*/
+		}
+
+	private Type type;
 	private String text;
 	private String url;
 	private String thumbnailUrl;
@@ -19,7 +43,7 @@ public final class Content
 	/**
 	 * @since 0.1.0
 	 */
-	public String getType()
+	public Type getType()
 		{
 		return type;
 		}

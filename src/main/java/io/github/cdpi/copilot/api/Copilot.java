@@ -28,6 +28,7 @@ public class Copilot extends API
 		.registerTypeAdapter(OffsetDateTime.class, JSON.getOffsetDateTimeDeserializer())
 		.registerTypeAdapter(Author.class, JSON.getEnumDeserializer(Author.class))
 		.registerTypeAdapter(Channel.class, JSON.getEnumDeserializer(Channel.class))
+		.registerTypeAdapter(Content.Type.class, JSON.getEnumDeserializer(Content.Type.class))
 		.create();
 
 	/**
